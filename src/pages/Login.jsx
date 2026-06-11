@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import { Eye, EyeSlash } from '@gravity-ui/icons';
-import { signInWithRedirect, getRedirectResult } from 'firebase/auth'; // 👈 রিডাইরেক্ট মেথডগুলো ইমপোর্ট করা হলো
+import { signInWithRedirect, getRedirectResult } from 'firebase/auth'; 
 import { auth, googleProvider } from '../firebase/firebase.config'; 
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate(); 
 
-  // 🔄 ইউজার গুগলে লগইন করে ফিরে আসার পর তার ডাটা রিসিভ করার জন্য এই এফেক্টটি লাগবে
   useEffect(() => {
     getRedirectResult(auth)
       .then((result) => {
         if (result?.user) {
           console.log("Logged In User Info via Redirect:", result.user);
-          // সফলভাবে লগইন হলে হোম পেজে পাঠিয়ে দেবে
           navigate("/");
         }
       })
@@ -30,10 +28,9 @@ const Login = () => {
     console.log({ email, password });
   };
 
-  // 🔥 এই ফাংশনটি এখন পপআপের ঝামেলা ছাড়াই সরাসরি একই ট্যাবে গুগলে নিয়ে যাবে
   const handleGoogleLogin = () => {
     console.log("Redirecting to Google...");
-    signInWithRedirect(auth, googleProvider); // 👈 এখানেও আমরা রিডাইরেক্ট মেথডটি বসিয়ে দিলাম
+    signInWithRedirect(auth, googleProvider);
   };
 
   return (
@@ -100,7 +97,6 @@ const Login = () => {
           <div className="flex-grow border-t border-gray-100"></div>
         </div>
 
-        {/* 🌐 গুগল বাটন */}
         <button
           onClick={handleGoogleLogin}
           type="button"
