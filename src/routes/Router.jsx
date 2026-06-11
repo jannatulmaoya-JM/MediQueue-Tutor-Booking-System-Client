@@ -1,22 +1,8 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
+import MainLayout from "../layouts/MainLayout"; // 👈 আপনার লেআউট ফাইল (নিচে বুঝিয়ে দিচ্ছি)
 import Home from "../pages/Home";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-
-
-const MainLayout = () => {
-  return (
- <div className="min-h-screen flex flex-col justify-between bg-gray-50 font-sans">
-    <Navbar/>
-    <main className="flex-grow flex flex-col">
-        <Outlet/>
-    </main>
-
-   <Footer/>
- </div>
- 
-  );
-};
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +13,14 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      }
     ],
   },
 ]);
