@@ -1,22 +1,34 @@
-# React + Vite
+#  MediQueue – Tutor Booking System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MediQueue is a clean and simple tutor booking web platform. It helps students find available tutors by subject, check real-time schedule slots, and book learning sessions instantly without any timing conflicts.
 
-Currently, two official plugins are available:
+###  [Live Site Link](https://mediqueue-app.vercel.app) 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+##  Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+ ** Live Slot System:** Booking a tutor automatically decreases their total slot count by 1. Once it hits 0, the system blocks new bookings.
+ ** Date Restrictions:** The system checks the session start date and prevents early bookings if the current date hasn't reached it yet.
+ ** Instant Search & Filter:** Students can search for tutors by name (case-insensitive) and filter schedules using custom start/end date ranges.
+ ** Secure JWT Dashboard:** Handles private routes using client-side JSON Web Tokens (JWT) along with Firebase Google and email login.
+ ** Dark & Light Toggle:** A fully working dark/light mode switcher in the navbar that changes the theme layout globally across all devices.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech Stack
+
+ ** Frontend:** React.js, Tailwind CSS, React Router DOM, React Hot Toast
+ ** Backend:** Node.js, Express.js, JWT (JSON Web Tokens)
+ ** Database & Auth:** MongoDB, Firebase Authentication
+ 
+---
+
+##  How to Setup Locally
+
+1. Clone the project:
+```bash
 
 
-
-
-
-
+git clone [https://github.com/your-username/mediqueue-client.git](https://github.com/your-username/mediqueue-client.git)
+cd mediqueue-client
