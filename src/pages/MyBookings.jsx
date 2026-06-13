@@ -96,7 +96,7 @@ const MyBookings = () => {
       {cancelId && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 w-full max-w-sm text-center">
-            <p className="text-5xl mb-4">❓</p>
+            <p className="text-5xl mb-4"></p>
             <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">Cancel This Session?</h3>
             <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">The booking status will be updated to cancelled.</p>
             <div className="flex gap-3">

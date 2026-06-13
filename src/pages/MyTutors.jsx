@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Spinner from "../components/Spinner";
 
+import { Pencil, TrashBin, Flask, TriangleExclamation } from '@gravity-ui/icons';
+
 const subjects = ["Mathematics", "Physics", "Chemistry", "Biology", "English", "History", "Geography", "Computer Science", "Economics", "Other"];
 
 const MyTutors = () => {
@@ -98,14 +100,22 @@ const MyTutors = () => {
                   <td className="px-6 py-4">${tutor.hourlyFee}/hr</td>
                   <td className="px-6 py-4">{tutor.totalSlot}</td>
                   <td className="px-6 py-4">{tutor.teachingMode}</td>
-                  <td className="px-6 py-4 flex gap-2">
-                    <button onClick={() => setEditTutor(tutor)}
-                      className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 hover:bg-emerald-100 transition" title="Edit">
-                      
+                  <td className="px-6 py-4 flex items-center gap-3">
+                    <button 
+                      onClick={() => setEditTutor(tutor)}
+                      className="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 hover:bg-emerald-200 transition flex items-center justify-center shrink-0 cursor-pointer" 
+                      title="Edit"
+                    >
+                      {/* FIXED: আপনার দেওয়া <Pencil /> কম্পোনেন্ট ব্যবহার করা হয়েছে এবং রঙ গাঢ় করার জন্য text-emerald-700 দেওয়া হয়েছে */}
+                      <Pencil width="16" height="16" stroke="currentColor" fill="currentColor" className="text-emerald-700 dark:text-emerald-400" />
                     </button>
-                    <button onClick={() => setDeleteId(tutor._id)}
-                      className="p-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-500 hover:bg-red-100 transition" title="Delete">
-                     
+                    <button 
+                      onClick={() => setDeleteId(tutor._id)}
+                      className="w-9 h-9 rounded-lg bg-red-100 dark:bg-red-900/40 hover:bg-red-200 transition flex items-center justify-center shrink-0 cursor-pointer" 
+                      title="Delete"
+                    >
+                      {/* FIXED: রঙ গাঢ় করার জন্য text-red-700 দেওয়া হয়েছে */}
+                      <TrashBin width="16" height="16" stroke="currentColor" fill="currentColor" className="text-red-700 dark:text-red-400" />
                     </button>
                   </td>
                 </tr>
@@ -118,8 +128,14 @@ const MyTutors = () => {
       {/* Edit Modal */}
       {editTutor && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4 overflow-y-auto py-8">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 w-full max-w-lg">
-            <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-6">Edit Tutor</h3>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 w-full max-w-lg relative">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 flex items-center justify-center bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-xl shrink-0">
+                <Flask width="24" height="24" fill="currentColor" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Edit Tutor</h3>
+            </div>
+            
             <form onSubmit={handleUpdate} className="space-y-4">
               {[
                 { label: "Name", name: "name", defaultValue: editTutor.name },
@@ -151,10 +167,10 @@ const MyTutors = () => {
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setEditTutor(null)}
-                  className="flex-1 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl text-sm dark:text-gray-300">Cancel</button>
+                  className="flex-1 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl text-sm dark:text-gray-300 transition hover:bg-gray-50 dark:hover:bg-gray-700">Cancel</button>
                 <button type="submit" disabled={saving}
-                  className="flex-1 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-xl text-sm disabled:opacity-60">
-                  {saving ? "Saving..." : "Save Changes"}
+                  className="flex-1 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-xl text-sm disabled:opacity-60 transition shadow-sm hover:scale-105 active:scale-95 flex gap-2 items-center justify-center font-semibold">
+                  {saving ? "Saving Changes..." : "Save Changes"}
                 </button>
               </div>
             </form>
@@ -166,14 +182,16 @@ const MyTutors = () => {
       {deleteId && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 w-full max-w-sm text-center">
-            <p className="text-5xl mb-4"></p>
+            <div className="w-16 h-16 flex items-center justify-center bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 rounded-full mb-5 mx-auto">
+              <TriangleExclamation width="32" height="32" fill="currentColor" />
+            </div>
             <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">Delete Tutor?</h3>
-            <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">This action cannot be undone.</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mb-6 max-w-xs mx-auto leading-relaxed">This action cannot be undone. All data related to this tutor will be permanently removed.</p>
             <div className="flex gap-3">
               <button onClick={() => setDeleteId(null)}
-                className="flex-1 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl text-sm dark:text-gray-300">Cancel</button>
+                className="flex-1 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl text-sm dark:text-gray-300 transition hover:bg-gray-50 dark:hover:bg-gray-700">Cancel</button>
               <button onClick={handleDelete}
-                className="flex-1 py-2.5 bg-red-500 text-white rounded-xl text-sm hover:bg-red-600">Delete</button>
+                className="flex-1 py-2.5 bg-red-500 text-white rounded-xl text-sm hover:bg-red-600 transition shadow-sm hover:scale-105 active:scale-95 font-semibold">Delete</button>
             </div>
           </div>
         </div>
