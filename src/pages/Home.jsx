@@ -70,7 +70,7 @@ const Home = () => {
           </div>
         ) : (
           <div className="text-center py-10 text-gray-400">
-            <p className="text-4xl mb-3">📬</p>
+            <p className="text-4xl mb-3"></p>
             <p>No tutors available right now</p>
           </div>
         )}
