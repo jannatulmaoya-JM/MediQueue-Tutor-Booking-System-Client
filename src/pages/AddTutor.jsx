@@ -50,15 +50,15 @@ const AddTutor = () => {
       <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-2xl shadow p-8 space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
-            { label: "Tutor Name", name: "name", type: "text", placeholder: "Tutor Name" },
+            { label: "Subject Name", name: "name", type: "text", placeholder: "Sub Name" },
             { label: "Photo URL", name: "photo", type: "url", placeholder: "https://..." },
             { label: "Availability", name: "availability", type: "text", placeholder: "Sun-Thu 5:00PM-8:00PM" },
             { label: "Hourly Fee ($)", name: "hourlyFee", type: "number", placeholder: "25" },
             { label: "Total Slots", name: "totalSlot", type: "number", placeholder: "10" },
-            { label: "Institution", name: "institution", type: "text", placeholder: "Harvard University" },
+            { label: "Institution", name: "institution", type: "text", placeholder: " University" },
             { label: "Experience (years)", name: "experience", type: "text", placeholder: "5" },
-            { label: "Area", name: "area", type: "text", placeholder: "Downtown" },
-            { label: "City", name: "city", type: "text", placeholder: "New York" },
+            { label: "Area", name: "area", type: "text", placeholder: "Area" },
+            { label: "City", name: "city", type: "text", placeholder: "Dhaka" },
           ].map((f) => (
             <div key={f.name}>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{f.label}</label>
