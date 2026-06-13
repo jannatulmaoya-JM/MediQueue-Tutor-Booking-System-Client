@@ -37,8 +37,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
-        // JWT token
+      if (currentUser) {     
         try {
           const res = await axios.post(
             `${import.meta.env.VITE_API_URL}/jwt`,
