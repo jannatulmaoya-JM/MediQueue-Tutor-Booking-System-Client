@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../components/Spinner";
-import TutorCard from "../components/TutorCard"; // 🛠️ গ্লোবাল কার্ড ব্যবহার করা হলো
+import TutorCard from "../components/TutorCard";
 
 const Tutors = () => {
   const [tutors, setTutors] = useState([]);
@@ -10,6 +10,7 @@ const Tutors = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  
   useEffect(() => {
     const params = new URLSearchParams();
     if (search) params.append("search", search);
@@ -62,7 +63,7 @@ const Tutors = () => {
         <Spinner />
       ) : tutors.length === 0 ? (
         <div className="text-center py-20 text-gray-400">
-          <p className="text-5xl mb-4">📭</p>
+          <p className="text-5xl mb-4"></p>
           <p className="text-xl font-semibold">No tutors found</p>
           <p className="text-sm mt-2">Try adjusting your search or filters</p>
         </div>
