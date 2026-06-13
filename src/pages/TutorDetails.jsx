@@ -60,8 +60,6 @@ const TutorDetails = () => {
   const photo = tutor.photo || tutor.image;
   const name = tutor.name || tutor.title;
   const fee = tutor.hourlyFee || tutor.price;
-
-  // স্লট গণনা
   const totalSlots = tutor.totalSlot || 0;
   const bookedSlots = tutor.bookedSlot || 0;
   const remainingSlots = totalSlots - bookedSlots;
@@ -70,7 +68,6 @@ const TutorDetails = () => {
     <div className="max-w-5xl mx-auto px-6 py-12 dark:bg-gray-900 min-h-screen">
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row items-stretch gap-6 md:gap-8 border border-gray-100 dark:border-gray-700">
 
-        {/* বামপাশের ইমেজ কার্ড */}
         <div className="w-full md:w-[380px] shrink-0 relative bg-gray-100 dark:bg-gray-700 rounded-t-2xl md:rounded-tr-none md:rounded-l-2xl overflow-hidden">
           <img 
             src={photo} 
@@ -80,7 +77,7 @@ const TutorDetails = () => {
           />
         </div>
 
-        {/* ডানপাশের ক্লিন ইনফরমেশন লেআউট */}
+
         <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-start gap-4 mb-4">
@@ -96,7 +93,6 @@ const TutorDetails = () => {
               )}
             </div>
 
-            {/* আপনার রিকোয়ারমেন্ট অনুযায়ী কাস্টম ক্লিন টেক্সট ফরম্যাট */}
             <div className="space-y-2 text-base text-gray-600 dark:text-gray-300 border-t border-gray-100 dark:border-gray-700 pt-4">
               
               {tutor.institution && (
@@ -154,7 +150,7 @@ const TutorDetails = () => {
             </div>
           </div>
 
-          {/* বুকিং বাটন */}
+    
           <div className="mt-8 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-end">
             <button 
               onClick={() => setModalOpen(true)}
@@ -167,7 +163,7 @@ const TutorDetails = () => {
         </div>
       </div>
 
-      {/* Booking Modal */}
+    
       {modalOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4 backdrop-blur-sm">
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 w-full max-w-md border border-gray-100 dark:border-gray-700">
