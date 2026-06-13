@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import Spinner from "../components/Spinner";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-import { Cloud, Star, MapPin, Clock, Briefcase } from '@gravity-ui/icons';
+import { Star } from '@gravity-ui/icons';
 
 const TutorDetails = () => {
   const { id } = useParams();
@@ -40,6 +40,12 @@ const TutorDetails = () => {
     try {
       await axiosSecure.post("/bookings", bookingData);
       toast.success("Session booked successfully!");
+      
+      setTutor(prev => ({
+        ...prev,
+        bookedSlot: (prev.bookedSlot || 0) + 1
+      }));
+
       setModalOpen(false);
     } catch (err) {
       toast.error(err.response?.data?.message || "Booking failed");
@@ -55,100 +61,107 @@ const TutorDetails = () => {
   const name = tutor.name || tutor.title;
   const fee = tutor.hourlyFee || tutor.price;
 
+  // স্লট গণনা
+  const totalSlots = tutor.totalSlot || 0;
+  const bookedSlots = tutor.bookedSlot || 0;
+  const remainingSlots = totalSlots - bookedSlots;
+
   return (
     <div className="max-w-5xl mx-auto px-6 py-12 dark:bg-gray-900 min-h-screen">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row items-stretch gap-6 md:gap-8 border border-emerald-50 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row items-stretch gap-6 md:gap-8 border border-gray-100 dark:border-gray-700">
 
+        {/* বামপাশের ইমেজ কার্ড */}
         <div className="w-full md:w-[380px] shrink-0 relative bg-gray-100 dark:bg-gray-700 rounded-t-2xl md:rounded-tr-none md:rounded-l-2xl overflow-hidden">
           <img 
             src={photo} 
             alt={name} 
-            className="w-full h-64 md:h-full object-cover min-h-[280px]"
+            className="w-full h-64 md:h-full object-cover min-h-[320px]"
             onError={(e) => { e.target.src = "https://placehold.co/800x400?text=No+Image"; }} 
           />
         </div>
 
-        <div className="p-6 md:p-8 md:pl-0 flex-1 flex flex-col justify-between">
+        {/* ডানপাশের ক্লিন ইনফরমেশন লেআউট */}
+        <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
           <div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+            <div className="flex justify-between items-start gap-4 mb-4">
               <div>
                 <h1 className="text-3xl font-bold text-gray-800 dark:text-white">{name}</h1>
-                <p className="text-emerald-600 font-semibold text-lg mt-1">{tutor.subject}</p>
-                
-                {tutor.institution && (
-                  <p className="text-gray-600 dark:text-gray-300 font-medium mt-2">{tutor.institution}</p>
-                )}
-                {tutor.experience && (
-                  <p className="text-gray-500 dark:text-gray-400 text-sm mt-0.5">{tutor.experience} experience</p>
-                )}
+                <p className="text-emerald-600 font-semibold text-lg mt-0.5">{tutor.subject}</p>
               </div>
-
-              <div className="text-left sm:text-right shrink-0 bg-emerald-50/50 dark:bg-gray-700/50 p-4 rounded-xl border border-emerald-100/50 dark:border-gray-600">
-                {fee && (
-                  <p className="text-3xl font-extrabold text-gray-800 dark:text-white">
-                    ৳{fee}<span className="text-sm font-normal text-gray-400">/hr</span>
-                  </p>
-                )}
-                {tutor.rating && (
-                  <p className="text-yellow-500 font-bold mt-1 flex items-center gap-1 sm:justify-end">
-                    <Star width="16" height="16" fill="currentColor" />
-                    <span>{tutor.rating}</span>
-                  </p>
-                )}
-              </div>
+              {tutor.rating && (
+                <div className="flex items-center gap-1 text-yellow-500 font-bold bg-amber-50 dark:bg-amber-950/30 px-3 py-1 rounded-lg text-sm shrink-0 mt-1">
+                  <Star width="16" height="16" fill="currentColor" />
+                  <span>{tutor.rating}</span>
+                </div>
+              )}
             </div>
 
-            {tutor.description && (
-              <p className="text-gray-500 dark:text-gray-400 mt-4 text-sm leading-relaxed border-t border-gray-100 dark:border-gray-700 pt-4">
-                {tutor.description}
-              </p>
-            )}
+            {/* আপনার রিকোয়ারমেন্ট অনুযায়ী কাস্টম ক্লিন টেক্সট ফরম্যাট */}
+            <div className="space-y-2 text-base text-gray-600 dark:text-gray-300 border-t border-gray-100 dark:border-gray-700 pt-4">
+              
+              {tutor.institution && (
+                <p>
+                  <span className="font-bold text-gray-800 dark:text-gray-200">Varsity:</span> {tutor.institution}
+                </p>
+              )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+              {tutor.experience && (
+                <p>
+                  <span className="font-bold text-gray-800 dark:text-gray-200">Experience:</span> {tutor.experience}
+                </p>
+              )}
+
               {tutor.location && (
-                <div className="bg-gray-50 dark:bg-gray-700/40 border border-gray-100 dark:border-gray-700 rounded-xl p-3 text-sm flex items-center gap-3">
-                  <div className="p-2 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 rounded-lg shrink-0">
-                    <MapPin width="18" height="18" fill="currentColor" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-xs font-medium mb-0.5">Location</p>
-                    <p className="font-semibold text-gray-700 dark:text-gray-200">{tutor.location}</p>
-                  </div>
-                </div>
+                <p>
+                  <span className="font-bold text-gray-800 dark:text-gray-200">Location:</span>{" "}
+                  {typeof tutor.location === 'object' 
+                    ? `${tutor.location.city || ''}, ${tutor.location.area || ''}` 
+                    : tutor.location}
+                </p>
               )}
-              
+
               {tutor.availability && (
-                <div className="bg-gray-50 dark:bg-gray-700/40 border border-gray-100 dark:border-gray-700 rounded-xl p-3 text-sm flex items-center gap-3">
-                  <div className="p-2 bg-cyan-50 dark:bg-cyan-950/50 text-cyan-600 dark:text-cyan-400 rounded-lg shrink-0">
-                    <Clock width="18" height="18" fill="currentColor" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-xs font-medium mb-0.5">Availability</p>
-                    <p className="font-semibold text-gray-700 dark:text-gray-200">{tutor.availability}</p>
-                  </div>
-                </div>
+                <p>
+                  <span className="font-bold text-gray-800 dark:text-gray-200">Availability:</span> {tutor.availability}
+                </p>
               )}
-              
+
               {tutor.teachingMode && (
-                <div className="bg-gray-50 dark:bg-gray-700/40 border border-gray-100 dark:border-gray-700 rounded-xl p-3 text-sm flex items-center gap-3">
-                  <div className="p-2 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-lg shrink-0">
-                    <Briefcase width="18" height="18" fill="currentColor" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-xs mb-1 font-medium">Mode</p>
-                    <p className="font-semibold text-gray-700 dark:text-gray-200">{tutor.teachingMode}</p>
-                  </div>
-                </div>
+                <p>
+                  <span className="font-bold text-gray-800 dark:text-gray-200">Mode:</span> {tutor.teachingMode}
+                </p>
               )}
+
+              {fee && (
+                <p>
+                  <span className="font-bold text-gray-800 dark:text-gray-200">Hourly fees:</span> ৳ {fee}/hr
+                </p>
+              )}
+
+              <p>
+                <span className="font-bold text-gray-800 dark:text-gray-200">Available Slots:</span>{" "}
+                <span className={`font-bold ${remainingSlots > 0 ? "text-emerald-600" : "text-red-500"}`}>
+                  {remainingSlots > 0 ? `${remainingSlots} left` : "No slots available"}
+                </span>
+              </p>
+
+              {tutor.description && (
+                <p className="pt-2">
+                  <span className="font-bold text-gray-800 dark:text-gray-200">Bio:</span> {tutor.description}
+                </p>
+              )}
+
             </div>
           </div>
 
+          {/* বুকিং বাটন */}
           <div className="mt-8 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-end">
             <button 
               onClick={() => setModalOpen(true)}
-              className="w-full sm:w-auto px-10 py-3.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-xl shadow-lg hover:opacity-95 hover:scale-[1.02] transition-all duration-300"
+              disabled={remainingSlots <= 0}
+              className="w-full sm:w-auto px-10 py-3.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-xl shadow-lg hover:opacity-95 hover:scale-[1.02] transition-all duration-300 disabled:from-gray-400 disabled:to-gray-500 disabled:scale-100 disabled:cursor-not-allowed text-center"
             >
-              Book Session
+              {remainingSlots > 0 ? "Book Session" : "Seat Full"}
             </button>
           </div>
         </div>
@@ -162,12 +175,12 @@ const TutorDetails = () => {
             <form onSubmit={handleBook} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Student Name</label>
-                <input value={user.displayName || ""} readOnly
+                <input value={user?.displayName || ""} readOnly
                   className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl text-sm bg-gray-50 dark:bg-gray-700 dark:text-white focus:outline-none" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                <input value={user.email} readOnly
+                <input value={user?.email || ""} readOnly
                   className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl text-sm bg-gray-50 dark:bg-gray-700 dark:text-white focus:outline-none" />
               </div>
               <div>

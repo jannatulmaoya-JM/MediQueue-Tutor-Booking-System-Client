@@ -51,8 +51,6 @@ const Home = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const current = slides[slide];
-
   return (
     <div className="dark:bg-gray-900">
        <Banner/> 
@@ -93,7 +91,6 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {howItWorks.map((item, i) => (
               <div key={i} className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl p-6 shadow hover:shadow-md transition text-center flex flex-col items-center">
-               
                 <div className="w-12 h-12 flex items-center justify-center bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-xl mb-4 shrink-0">
                   {item.icon}
                 </div>
@@ -105,9 +102,7 @@ const Home = () => {
         </div>
       </section>
 
-
       {/* Why Choose */}
-
       <section className="max-w-6xl mx-auto px-6 py-16">
         <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-2">Why Choose MediQueue?</h2>
         <p className="text-center text-gray-500 dark:text-gray-400 mb-10">We're built for learners, by educators</p>
@@ -115,7 +110,6 @@ const Home = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {whyChoose.map((item, i) => (
             <div key={i} className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl p-6 shadow hover:shadow-lg transition text-center flex flex-col items-center">
-            
               <div className="w-12 h-12 flex items-center justify-center bg-cyan-50 dark:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 rounded-xl mb-4 shrink-0">
                 {item.icon}
               </div>
