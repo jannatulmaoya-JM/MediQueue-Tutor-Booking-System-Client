@@ -7,6 +7,7 @@ const NotFound = () => (
     <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-md">
       Looks like the page you're looking for doesn't exist or has been moved.
     </p>
+
     <Link to="/" className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-xl shadow hover:opacity-90">
       Back to Home
     </Link>
